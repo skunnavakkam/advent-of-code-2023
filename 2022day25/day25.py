@@ -25,4 +25,5 @@ with open("input.txt") as f:
     total = 0
     for line in f:
         total += snafu_to_decimal(line.strip())
+        print()
     print(decimal_to_snafu(total))

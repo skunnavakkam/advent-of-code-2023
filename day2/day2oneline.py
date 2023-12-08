@@ -1,0 +1,1 @@
+import re;x= sum([max([int(i) for i in re.findall("([0-9]+) blue", line)]) * max([int(i) for i in re.findall("([0-9]+) green", line)]) * max([int(i) for i in re.findall("([0-9]+) red", line)]) for line in open("input.txt").readlines()])
