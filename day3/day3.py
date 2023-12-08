@@ -4,7 +4,7 @@ import numpy
 numbers_next_to_symbols = []
 
 filetext = ""
-with open("test.txt") as f:
+with open("input.txt") as f:
     filetext = f.read()
 
 symbol_indices = []
@@ -29,9 +29,12 @@ moves = [
     -1,
 ]
 
+
+star_dict = {}
 buffer = ""
 is_number = False
 is_adjacent = False
+current_symbol = 0
 for index, char in enumerate(filetext):
     if not is_number:
         if char.isdigit():
@@ -41,24 +44,26 @@ for index, char in enumerate(filetext):
                 for move in moves:
                     if index + move in symbol_indices:
                         is_adjacent = True
-                        print(filetext[index + move])
-    else:
+                        current_symbol = index + move
+    elif is_number:
         if char.isdigit():
             buffer += char
             if not is_adjacent:
                 for move in moves:
                     if index + move in symbol_indices:
                         is_adjacent = True
+                        current_symbol = index + move
         else:
             number = int(buffer)
+
             if is_adjacent:
-                count += number
+                if current_symbol in star_dict:
+                    count += star_dict[current_symbol] * number
+                else:
+                    star_dict[current_symbol] = number
             buffer = ""
             is_number = False
             is_adjacent = False
-
-    buffer = ""
-    is_number = False
-    is_adjacent = False
+            current_symbol = 0
 
 print(count)
