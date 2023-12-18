@@ -1,8 +1,3 @@
-import re
-import numpy
-
-numbers_next_to_symbols = []
-
 filetext = ""
 with open("input.txt") as f:
     filetext = f.read()
@@ -16,7 +11,6 @@ for index, char in enumerate(filetext):
 
 line_length = len(filetext.split("\n")[0]) + 1
 
-count = 0
 
 moves = [
     line_length,
@@ -30,6 +24,8 @@ moves = [
 ]
 
 
+part2count = 0
+part1count = 0
 star_dict = {}
 buffer = ""
 is_number = False
@@ -57,8 +53,10 @@ for index, char in enumerate(filetext):
             number = int(buffer)
 
             if is_adjacent:
+                part1count += number
+
                 if current_symbol in star_dict:
-                    count += star_dict[current_symbol] * number
+                    part2count += star_dict[current_symbol] * number
                 else:
                     star_dict[current_symbol] = number
             buffer = ""
@@ -66,4 +64,4 @@ for index, char in enumerate(filetext):
             is_adjacent = False
             current_symbol = 0
 
-print(count)
+print(part1count, part2count)
